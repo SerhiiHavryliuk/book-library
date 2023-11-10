@@ -3,6 +3,7 @@ import './App.css';
 import { Counter } from './features/counter/Counter';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+          <h2>My id is: {uuidv4()}</h2>
         <Counter />
         <Button variant="primary" onClick={onClickUsers}>Get users</Button>
         <img src={logo} className="App-logo" alt="logo" />

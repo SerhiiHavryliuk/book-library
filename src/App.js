@@ -1,14 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import {Counter} from "./features/counter/Counter";
-import {Button} from "react-bootstrap";
+import { Counter } from './features/counter/Counter';
+import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Counter/>
+        <Counter />
         <Button variant="primary">Primary</Button>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -18,7 +18,7 @@ function App() {
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer" // prettier-ignore
         >
           Learn React
         </a>

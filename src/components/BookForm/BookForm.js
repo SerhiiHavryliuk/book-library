@@ -1,9 +1,10 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useDispatch, useSelector } from 'react-redux';
 import { addBook } from '../../app/slices/booksSlice';
+import { showNotify } from '../../utils/functions';
 import style from './BookForm.module.scss';
-import { useState } from 'react';
 
 function BookForm() {
   const books = useSelector((state) => state.books.booksList);
@@ -20,6 +21,9 @@ function BookForm() {
     };
     dispatch(addBook(newBok));
     clearForm();
+
+    showNotify('Success add new book');
+
     console.log(books);
   };
 

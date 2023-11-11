@@ -1,11 +1,11 @@
 import BookList from './components/BookList/BookList';
 import BookHeader from './components/BookHeader/BookHeader';
+import BookFilter from './components/BookFilter/BookFilter';
+import BookForm from './components/BookForm/BookForm';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-
-import BookFilter from './components/BookFilter/BookFilter';
-import BookForm from './components/BookForm/BookForm';
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
       <div className="list">
         <BookList />
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { showNotify, createNewBook, createRandomBook } from '../../utils/functions';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { addBook } from '../../app/slices/booksSlice';
-import { showNotify } from '../../utils/functions';
 import style from './BookForm.module.scss';
 
 function BookForm() {
@@ -15,21 +15,19 @@ function BookForm() {
   const handlerAddBook = (e) => {
     e.preventDefault();
 
-    const newBok = {
-      title,
-      author
-    };
-    dispatch(addBook(newBok));
-    clearForm();
-
-    showNotify('Success add new book');
+    if (title && author) {
+      dispatch(addBook(createNewBook(title, author)));
+      showNotify('Success add new book');
+      clearForm();
+    }
 
     console.log(books);
   };
 
-  const handlerAddRandomBook = (e) => {
-    e.preventDefault();
-    console.log('Add new Random book');
+  const handlerAddRandomBook = () => {
+    dispatch(addBook(createRandomBook(title, author)));
+    showNotify('Success add new book');
+    clearForm();
   };
 
   const clearForm = () => {

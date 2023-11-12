@@ -6,21 +6,21 @@
 .buttons{
   display: flex;
 }
-.btnAddBook{
+.buttons .btnAddBook{
   width: 50%;
   background: #0d6efd;
   color: #fff;
   border: none;
   margin-right: 5px;
 }
-.btnAddBook:hover{
+.buttons .btnAddBook:hover{
   background: #0b5ed7;
 }
-.btnAddBook:focus{
+.buttons .btnAddBook:focus{
   background: #0b5ed7;
   color: #fff;
 }
-.btnAddRandomBook{
+.buttons .btnAddRandomBook{
   width: 50%;
   margin-left: 5px;
 }

@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
 import style from './BookList.module.scss';
 
+import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
+
 function BookList() {
   const books = useSelector((state) => state.books.booksList);
 
@@ -12,6 +14,10 @@ function BookList() {
           return (
             <li key={index}>
               {item.title} <b> {item.author}</b>
+              <span>
+                <BsBookmarkCheckFill />
+                <BsBookmarkCheck />
+              </span>
             </li>
           );
         })}

@@ -4,13 +4,30 @@ import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
 import { deleteBook, toggleFavorite } from '../../app/slices/booksSlice';
 import { showNotify } from '../../utils/functions';
 import style from './BookList.module.scss';
+import {
+  selectAuthorFilter,
+  selectOnlyFavoriteFilter,
+  selectTitleFilter
+} from '../../app/slices/filterSlice';
 
 function BookList() {
   const allBooks = useSelector((state) => state.books.booksList);
-  // Second variant use state
-  //const allBooks = useSelector(selectBooks);
+  const filterTitle = useSelector(selectTitleFilter);
+  const filterAuthor = useSelector(selectAuthorFilter);
+  const filterOnlyFavorite = useSelector(selectOnlyFavoriteFilter);
   const dispatch = useDispatch();
 
+  let filteredBooks = () => {
+    if (filterTitle || filterAuthor || filterOnlyFavorite) {
+      return allBooks.filter((item) => {
+        const matchesTitle = item.title.toLowerCase().includes(filterTitle.toLowerCase());
+        const matchesAuthor = item.author.toLowerCase().includes(filterAuthor.toLowerCase());
+        const matchesFavorites = filterOnlyFavorite ? item.isFavorite : true;
+        return matchesTitle && matchesAuthor && matchesFavorites;
+      });
+    }
+    return allBooks;
+  };
   const handleDeleteBook = (id) => {
     dispatch(deleteBook(id));
     showNotify('Remove book');
@@ -25,13 +42,13 @@ function BookList() {
       <h2> Book List </h2>
       {allBooks.length ? (
         <ul className={style.list}>
-          {allBooks.map((item, index) => {
+          {filteredBooks().map((item, index) => {
             return (
-              <li key={index} className={style.item}>
+              <li key={item.id} className={style.item}>
                 <div className={style.listDescription}>
-                  {item.title} <b> {item.author}</b>
+                  {++index + '.'} {item.title} <b> {item.author}</b>
                 </div>
-                <div onClick={() => handleToggleFavoriteBook(item.id)}>
+                <div className={style.favorite} onClick={() => handleToggleFavoriteBook(item.id)}>
                   {item.isFavorite ? <BsBookmarkCheckFill /> : <BsBookmarkCheck />}
                   <Button
                     variant="outline-danger"

@@ -37,20 +37,20 @@ function BookForm() {
 
   return (
     <div className={style.bookForm}>
-      <h2> Book form </h2>
+      <h2> Add new book </h2>
       <form onSubmit={handlerAddBook}>
         <Form.Control
           type="text"
           placeholder="Title"
           value={title}
-          onChange={() => setTitle(event.target.value)}
+          onChange={(event) => setTitle(event.target.value)}
         />
         <br />
         <Form.Control
           type="text"
           placeholder="Author"
           value={author}
-          onChange={() => setAuthor(event.target.value)}
+          onChange={(event) => setAuthor(event.target.value)}
         />
         <br />
         <div className={style.buttons}>

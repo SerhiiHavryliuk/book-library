@@ -22,7 +22,7 @@ function App() {
       <div className="list">
         <BookList />
       </div>
-      <ToastContainer />
+      <ToastContainer position="top-right" autoClose={1000} />
     </div>
   );
 }

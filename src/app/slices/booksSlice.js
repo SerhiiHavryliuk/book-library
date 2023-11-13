@@ -1,27 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
-import data from '../../data/books.json';
+// import data from '../../data/books.json';
 
 const initialState = {
-  booksList: data
+  booksList: []
 };
 
 export const booksSlice = createSlice({
-  name: 'counter',
+  name: 'booksAction',
   initialState,
   reducers: {
     addBook: (state, action) => {
       state.booksList.push(action.payload);
     },
-    deleteBook: (state) => {
-      state.booksList -= 1;
+    deleteBook: (state, action) => {
+      state.booksList = state.booksList.filter((item) => item.id !== action.payload);
     },
-    toggleBook: (state, action) => {
-      state.booksList += action.payload;
+    toggleFavorite: (state, action) => {
+      state.tttt += action.payload;
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { addBook, deleteBook, toggleBook } = booksSlice.actions;
+export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
+
+// Second variant use state
+// export const selectBooks = (state) => state.books.booksList;
 
 export default booksSlice.reducer;

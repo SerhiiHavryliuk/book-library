@@ -1,4 +1,26 @@
 .bookList{
   padding: 20px;
   background: #61dafb;
+  border-radius: 0.375rem;
+}
+.list {
+  list-style: none;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  padding: 5px 0;
+}
+.listDescription {
+  display: flex;
+  align-items: center;
+
+  b{
+    padding-left: 5px;
+  }
+}
+
+.buttonDelete{
+  margin-left: 5px;
 }

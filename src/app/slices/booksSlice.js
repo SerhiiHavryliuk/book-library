@@ -16,7 +16,12 @@ export const booksSlice = createSlice({
       state.booksList = state.booksList.filter((item) => item.id !== action.payload);
     },
     toggleFavorite: (state, action) => {
-      state.tttt += action.payload;
+      state.booksList = state.booksList.map((item) => {
+        if (item.id === action.payload) {
+          item.isFavorite = !item.isFavorite;
+        }
+        return item;
+      });
     }
   }
 });

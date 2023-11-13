@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
-import { deleteBook } from '../../app/slices/booksSlice';
+import { deleteBook, toggleFavorite } from '../../app/slices/booksSlice';
 import { showNotify } from '../../utils/functions';
 import style from './BookList.module.scss';
 
@@ -16,6 +16,10 @@ function BookList() {
     showNotify('Remove book');
   };
 
+  const handleToggleFavoriteBook = (id) => {
+    dispatch(toggleFavorite(id));
+  };
+
   return (
     <div className={style.bookList}>
       <h2> Book List </h2>
@@ -26,9 +30,8 @@ function BookList() {
               <div className={style.listDescription}>
                 {item.title} <b> {item.author}</b>
               </div>
-              <div>
-                <BsBookmarkCheckFill />
-                <BsBookmarkCheck />
+              <div onClick={() => handleToggleFavoriteBook(item.id)}>
+                {item.isFavorite ? <BsBookmarkCheckFill /> : <BsBookmarkCheck />}
                 <Button
                   variant="outline-danger"
                   size="sm"

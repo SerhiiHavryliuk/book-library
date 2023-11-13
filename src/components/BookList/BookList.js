@@ -17,7 +17,7 @@ function BookList() {
   const filterOnlyFavorite = useSelector(selectOnlyFavoriteFilter);
   const dispatch = useDispatch();
 
-  let filteredBooks = () => {
+  const filteredBooks = () => {
     if (filterTitle || filterAuthor || filterOnlyFavorite) {
       return allBooks.filter((item) => {
         const matchesTitle = item.title.toLowerCase().includes(filterTitle.toLowerCase());
@@ -27,6 +27,23 @@ function BookList() {
       });
     }
     return allBooks;
+  };
+
+  const highlightMatch = (text, filter) => {
+    if (!filter) return text;
+
+    let regex = new RegExp(`(${filter})`, 'gi');
+
+    return text.split(regex).map((substring, i) => {
+      if (substring.toLowerCase() === filter.toLowerCase()) {
+        return (
+          <mark key={i} className="highlight">
+            {substring}
+          </mark>
+        );
+      }
+      return substring;
+    });
   };
   const handleDeleteBook = (id) => {
     dispatch(deleteBook(id));
@@ -46,7 +63,8 @@ function BookList() {
             return (
               <li key={item.id} className={style.item}>
                 <div className={style.listDescription}>
-                  {++index + '.'} {item.title} <b> {item.author}</b>
+                  {++index + '.'} {highlightMatch(item.title, filterTitle)}{' '}
+                  <b> {highlightMatch(item.author, filterAuthor)}</b>
                 </div>
                 <div className={style.favorite} onClick={() => handleToggleFavoriteBook(item.id)}>
                   {item.isFavorite ? <BsBookmarkCheckFill /> : <BsBookmarkCheck />}

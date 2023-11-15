@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
-import { deleteBook, toggleFavorite } from '../../app/slices/booksSlice';
-import { showNotify } from '../../utils/functions';
-import style from './BookList.module.scss';
+import { useEffect } from 'react';
 import {
   selectAuthorFilter,
   selectOnlyFavoriteFilter,
   selectTitleFilter
 } from '../../app/slices/filterSlice';
+import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
+import { Button } from 'react-bootstrap';
+import { toggleFavorite, fetchBooks, deleteBookFromDB } from '../../app/slices/booksSlice';
+import style from './BookList.module.scss';
 
 function BookList() {
   const allBooks = useSelector((state) => state.books.booksList);
@@ -16,6 +16,10 @@ function BookList() {
   const filterAuthor = useSelector(selectAuthorFilter);
   const filterOnlyFavorite = useSelector(selectOnlyFavoriteFilter);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch]);
 
   const filteredBooks = () => {
     if (filterTitle || filterAuthor || filterOnlyFavorite) {
@@ -46,8 +50,7 @@ function BookList() {
     });
   };
   const handleDeleteBook = (id) => {
-    dispatch(deleteBook(id));
-    showNotify('Remove book');
+    dispatch(deleteBookFromDB(id));
   };
 
   const handleToggleFavoriteBook = (id) => {

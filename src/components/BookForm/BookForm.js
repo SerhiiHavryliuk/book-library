@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { showNotify, createNewBook, createRandomBook } from '../../utils/functions';
+import { useDispatch } from 'react-redux';
+import { createNewBook, createRandomBook } from '../../utils/functions';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { addBook } from '../../app/slices/booksSlice';
+import { addBookFromDB } from '../../app/slices/booksSlice';
 import style from './BookForm.module.scss';
 
 function BookForm() {
-  const books = useSelector((state) => state.books.booksList);
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -16,18 +15,15 @@ function BookForm() {
     e.preventDefault();
 
     if (title && author) {
-      dispatch(addBook(createNewBook(title, author)));
-      showNotify('Success add new book');
+      const newBook = createNewBook(title, author);
+      dispatch(addBookFromDB(newBook));
       clearForm();
     }
-
-    console.log(books);
   };
 
   const handlerAddRandomBook = () => {
-    dispatch(addBook(createRandomBook(title, author)));
-    showNotify('Success add new book');
-    clearForm();
+    const newBook = createRandomBook();
+    dispatch(addBookFromDB(newBook));
   };
 
   const clearForm = () => {

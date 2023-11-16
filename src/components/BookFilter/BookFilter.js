@@ -62,7 +62,10 @@ function BookFilter() {
         <div className={style.favorite} onClick={() => handleFilterToggleFavorite()}>
           {isFavorite ? <BsBookmarkCheckFill /> : <BsBookmarkCheck />}
         </div>
-        <Button variant="outline-primary" onClick={handleFilterReset}>
+        <Button
+          variant="outline-primary"
+          className={style.btnResetFilters}
+          onClick={handleFilterReset}>
           Reset Filters
         </Button>
       </div>

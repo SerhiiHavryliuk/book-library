@@ -5,6 +5,10 @@
 }
 .filters{
   display: flex;
+
+  @media screen and (max-width: 900px) {
+    justify-content: space-between;
+  }
 }
 .titleInput, .authorInput {
   max-width: 250px;
@@ -16,4 +20,8 @@
   align-items: center;
   margin-right: 20px;
   cursor: pointer;
+}
+.btnResetFilters{
+  width: 120px;
+  min-width: 120px;
 }

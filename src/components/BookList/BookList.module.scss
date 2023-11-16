@@ -5,6 +5,7 @@
 }
 .list {
   list-style: none;
+  padding-left: 0;
 }
 .item {
   display: flex;
@@ -23,11 +24,13 @@
 
 .buttonDelete{
   margin-left: 5px;
+  align-self: center;
 }
 
 .favorite{
   font-size: 25px;
   cursor: pointer;
+  align-self: center;
 }
 
 .itemButtons{

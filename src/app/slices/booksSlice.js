@@ -175,5 +175,6 @@ export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
 
 // Second variant use state
 // export const selectBooks = (state) => state.books.booksList;
+export const selectIsLoadingViaAPI = (state) => state.books.isLoadingViaAPI;
 
 export default booksSlice.reducer;

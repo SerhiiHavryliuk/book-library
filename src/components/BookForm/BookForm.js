@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { addBookFromDB } from '../../app/slices/booksSlice';
 import style from './BookForm.module.scss';
+import { toast } from 'react-toastify';
 
 function BookForm() {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ function BookForm() {
       const newBook = createNewBook(title, author);
       dispatch(addBookFromDB(newBook));
       clearForm();
+    } else {
+      toast.error('ERROR! Please fill in the fields');
     }
   };
 

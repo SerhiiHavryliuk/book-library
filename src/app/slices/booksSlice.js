@@ -25,7 +25,6 @@ export const fetchBooks = createAsyncThunk('books/fetchBook', async (url, thunkA
 export const deleteBookFromDB = createAsyncThunk('books/deleteBook', async (id, thunkAPI) => {
   try {
     const res = await axios.delete(`https://peach-angler-fez.cyclic.app/api/books/${id}`);
-    thunkAPI.dispatch(fetchBooks());
     return res.data;
   } catch (error) {
     console.log(error.message);
@@ -40,7 +39,27 @@ export const deleteBookFromDB = createAsyncThunk('books/deleteBook', async (id, 
 export const addBookFromDB = createAsyncThunk('books/addBook', async (book, thunkAPI) => {
   try {
     const res = await axios.post('https://peach-angler-fez.cyclic.app/api/books', book);
-    thunkAPI.dispatch(fetchBooks());
+    return res.data;
+  } catch (error) {
+    console.log(error.message);
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const updateBookFromDB = createAsyncThunk('books/updateBook', async (id, thunkAPI) => {
+  const state = thunkAPI.getState().books;
+  const book = state.booksList.find((item) => item.id === id);
+  const updatedBook = {
+    ...book,
+    isFavorite: !book.isFavorite
+  };
+
+  try {
+    const res = await axios.patch(
+      `https://peach-angler-fez.cyclic.app/api/books/${id}`,
+      updatedBook
+    );
+    // Приклад визову іншого методо у redux
+    // thunkAPI.dispatch(fetchBooks());
     return res.data;
   } catch (error) {
     console.log(error.message);
@@ -53,23 +72,24 @@ export const booksSlice = createSlice({
   initialState,
   reducers: {
     addBook: (state, action) => {
-      state.booksList.push(action.payload);
+      console.log(state, action);
+      // Перший робочий варіант
+      // state.booksList.push(action.payload);
     },
     deleteBook: (state, action) => {
+      console.log(state, action);
+      // Перший робочий варіант
       // state.booksList = state.booksList.filter((item) => item.id !== action.payload);
-      console.log('delete book');
-      console.log(state, action.payload);
     },
     toggleFavorite: (state, action) => {
-      state.booksList = state.booksList.map((item) => {
-        if (item.id === action.payload) {
-          item.isFavorite = !item.isFavorite;
-        }
-        return item;
-      });
-    },
-    fetchAllBook: (state, action) => {
-      state.booksList = action.payload;
+      console.log(state, action);
+      // Перший робочий варіант
+      // state.booksList = state.booksList.map((item) => {
+      //   if (item.id === action.payload) {
+      //     item.isFavorite = !item.isFavorite;
+      //   }
+      //   return item;
+      // });
     }
   },
   extraReducers: {
@@ -124,6 +144,28 @@ export const booksSlice = createSlice({
       console.log('rejected --- addBookFromDB');
       state.isLoadingViaAPI = false;
       showNotify('Error add new book');
+    },
+
+    // addBookFromDB ---------------------------------------------------
+    [updateBookFromDB.pending]: (state) => {
+      console.log('pending --- updateBookFromDB');
+      state.isLoadingViaAPI = true;
+    },
+    [updateBookFromDB.fulfilled]: (state, action) => {
+      state.isLoadingViaAPI = false;
+
+      state.booksList = state.booksList.map((item) => {
+        if (item.id === action.payload.id) {
+          item.isFavorite = !item.isFavorite;
+        }
+        return item;
+      });
+      showNotify('Success toggle book');
+    },
+    [updateBookFromDB.rejected]: (state) => {
+      console.log('rejected --- updateBookFromDB');
+      state.isLoadingViaAPI = false;
+      showNotify('Error toggle  book');
     }
   }
 });

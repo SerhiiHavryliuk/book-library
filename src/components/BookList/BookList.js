@@ -7,7 +7,7 @@ import {
 } from '../../app/slices/filterSlice';
 import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
 import { Button } from 'react-bootstrap';
-import { toggleFavorite, fetchBooks, deleteBookFromDB } from '../../app/slices/booksSlice';
+import { fetchBooks, deleteBookFromDB, updateBookFromDB } from '../../app/slices/booksSlice';
 import style from './BookList.module.scss';
 
 function BookList() {
@@ -19,7 +19,7 @@ function BookList() {
 
   useEffect(() => {
     dispatch(fetchBooks());
-  }, [dispatch]);
+  }, []);
 
   const filteredBooks = () => {
     if (filterTitle || filterAuthor || filterOnlyFavorite) {
@@ -54,7 +54,9 @@ function BookList() {
   };
 
   const handleToggleFavoriteBook = (id) => {
-    dispatch(toggleFavorite(id));
+    // Перший варіант
+    // dispatch(toggleFavorite(id));
+    dispatch(updateBookFromDB(id));
   };
 
   return (
@@ -69,8 +71,10 @@ function BookList() {
                   {++index + '.'} {highlightMatch(item.title, filterTitle)}{' '}
                   <b> {highlightMatch(item.author, filterAuthor)}</b>
                 </div>
-                <div className={style.favorite} onClick={() => handleToggleFavoriteBook(item.id)}>
-                  {item.isFavorite ? <BsBookmarkCheckFill /> : <BsBookmarkCheck />}
+                <div className={style.itemButtons}>
+                  <div className={style.favorite} onClick={() => handleToggleFavoriteBook(item.id)}>
+                    {item.isFavorite ? <BsBookmarkCheckFill /> : <BsBookmarkCheck />}
+                  </div>
                   <Button
                     variant="outline-danger"
                     size="sm"
